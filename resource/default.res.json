@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "description_json,link_png,coin_mp3,explosion_mp3,fire_mp3,clound-l_png,clound-m_png,clound-s_png,house_png,house1_png,wall_png,brand_svg,rocket_png,cover_png,loading_png,barrier_png,repeat_png,devil_png,weapon_png,pea-bullet_png,player_png,pea_png,cannon_png,index-bg_png,bg_png,blood_png,energy_png,fire_json,fireworks_json,jellyfish_json,magic_png,star_png,sun_json,test_json,test_png",
+			"keys": "description_json,link_png,coin_mp3,explosion_mp3,fire_mp3,clound-l_png,clound-m_png,clound-s_png,house_png,house1_png,wall_png,brand_svg,rocket_png,cover_png,loading_png,barrier_png,repeat_png,devil_png,weapon_png,pea-bullet_png,player_png,pea_png,cannon_png,index-bg_png,bg_png,blood_png,energy_png,fire_json,fireworks_json,jellyfish_json,magic_png,star_png,sun_json,test_json,test_png,bg_mp3",
 			"name": "preload"
 		}
 	],
@@ -175,6 +175,11 @@
 			"name": "test_png",
 			"type": "image",
 			"url": "assets/particle/test.png"
+		},
+		{
+			"name": "bg_mp3",
+			"type": "sound",
+			"url": "assets/sounds/bg.mp3"
 		}
 	]
 }

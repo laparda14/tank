@@ -140,6 +140,7 @@ var Main = (function (_super) {
                 return;
             }
             world.step(dt / 1000);
+            tx.text = "I'm Jack, I will use Egret create a fantasy mobile game!" + Math.floor(1000 / dt);
             var stageHeight = egret.MainContext.instance.stage.stageHeight;
             var l = world.bodies.length;
             for (var i = 0; i < l; i++) {
@@ -227,8 +228,13 @@ var Main = (function (_super) {
         this.btn2.touchEnabled = true;
         this.btn2.addEventListener(egret.TouchEvent.TOUCH_TAP, this.changeTexture, this);
         this.changeEffect();
+        // 音频
+        this.sound = RES.getRes("fire_mp3");
+        // var bgMusic:egret.Sound = RES.getRes("bg_mp3");
+        // bgMusic.play(0, -1);
     };
     p.onClick = function (event) {
+        this.sound.play(0, 1);
         if (event.target == this.btn1 || event.target == this.btn2) {
             return;
         }

@@ -118,6 +118,7 @@ class Main extends egret.DisplayObjectContainer {
      * Create a game scene
      */
 	private webSocket:egret.WebSocket;
+    private sound:egret.Sound;
     private createGameScene():void {
         var bg:egret.Shape = new egret.Shape();
         bg.graphics.beginFill( 0x336699 );
@@ -162,7 +163,7 @@ class Main extends egret.DisplayObjectContainer {
 				return;
 			}
 			world.step(dt / 1000);
-
+            tx.text = "I'm Jack, I will use Egret create a fantasy mobile game!" + Math.floor(1000 / dt); 
 			var stageHeight:number = egret.MainContext.instance.stage.stageHeight;
 			var l = world.bodies.length;
 			for (var i:number = 0; i < l; i++) {
@@ -265,8 +266,14 @@ class Main extends egret.DisplayObjectContainer {
         this.btn2.addEventListener(egret.TouchEvent.TOUCH_TAP, this.changeTexture, this);
 
         this.changeEffect();
+
+        // 音频
+        this.sound = RES.getRes("fire_mp3");
+        // var bgMusic:egret.Sound = RES.getRes("bg_mp3");
+        // bgMusic.play(0, -1);
     }
-     private onClick(event):void {
+    private onClick(event):void {
+        this.sound.play(0, 1);
         if(event.target == this.btn1 || event.target == this.btn2) {
             return;
         }

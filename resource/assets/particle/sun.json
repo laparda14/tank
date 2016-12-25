@@ -39,6 +39,6 @@
     "tangentialAccelerationVariance": 0,
     "startAlpha": 1,
     "startAlphaVariance": 0,
-    "endAlpha": 1,
+    "endAlpha": 0,
     "endAlphaVariance": 0
 }

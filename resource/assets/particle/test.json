@@ -1,7 +1,7 @@
 {
 "texture":"newParticle.png",
-"startAlpha":1
-,"startAlphaVariance":0.07058823529411765
+"startAlpha":0.99
+,"startAlphaVariance":0
 ,"startRotation":0
 ,"emitAngle":177
 ,"startRotationVariance":0
@@ -24,12 +24,12 @@
 ,"radialAccelerationVariance":1
 ,"endBlueVariance":0
 ,"tangentialAcceleration":0
-,"endAlpha":0
+,"endAlpha":0.1
 ,"startGreen":255
-,"maxRadius":100
-,"speed":10.65
-,"maxRadiusVariance":30
-,"lifespan":2000
+,"maxRadius":20
+,"speed":10
+,"maxRadiusVariance":0
+,"lifespan":1600
 ,"tangentialAccelerationVariance":5
 ,"minRadius":20
 ,"lifespanVariance":0
@@ -40,7 +40,7 @@
 ,"startSizeVariance":0
 ,"endRed":255
 ,"rotatePerSecondVariance":10
-,"endSize":1
+,"endSize":5
 ,"endSizeVariance":0
 ,"startBlueVariance":0
 ,"startBlue":255
