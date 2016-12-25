@@ -30,6 +30,7 @@
 	<script egret="lib" src="libs/modules/res/res.js" src-release="libs/modules/res/res.min.js"></script>
 	<script egret="lib" src="libs/modules/socket/socket.js" src-release="libs/modules/socket/socket.min.js"></script>
 	<script egret="lib" src="libs/modules/physics/physics.js" src-release="libs/modules/physics/physics.min.js"></script>
+	<script egret="lib" src="libs/modules/socket.io/socket.io.js" src-release="libs/modules/socket.io/socket.io.min.js"></script>
 	<script egret="lib" src="libs/modules/particle/particle.js" src-release="libs/modules/particle/particle.min.js"></script>
 	<!--modules_files_end-->
 
@@ -67,5 +68,13 @@
          **/
         egret.runEgret({renderMode:"webgl", audioType:0});
     </script>
+<!--     <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+    <script>
+      var socket = io('http://localhost:3000');
+      socket.on('news', function (data) {
+        console.log(data);
+        socket.emit('my other event', { my: 'data' });
+      });
+    </script> -->
 </body>
 </html>

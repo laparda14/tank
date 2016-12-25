@@ -121,6 +121,13 @@ var Main = (function (_super) {
         this.webSocket.addEventListener(egret.ProgressEvent.SOCKET_DATA, this.onReceiveMessage, this);
         this.webSocket.addEventListener(egret.Event.CONNECT, this.onSocketOpen, this);
         this.webSocket.connect("echo.websocket.org", 80);
+        this.socket = io.connect('http://localhost:3000/');
+        this.socket.on('news', function (data) {
+            self.trace(data);
+        });
+        this.stage.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function () {
+            self.sendMessage("message content");
+        }, this);
         // 刚体
         var factor = 10;
         //创建world
@@ -232,6 +239,13 @@ var Main = (function (_super) {
         this.sound = RES.getRes("fire_mp3");
         // var bgMusic:egret.Sound = RES.getRes("bg_mp3");
         // bgMusic.play(0, -1);
+    };
+    p.sendMessage = function (msg) {
+        console.log("send message: " + msg);
+        this.socket.emit("message", { date: Date.now() });
+    };
+    p.trace = function (msg) {
+        console.log(Date.now() - msg.date);
     };
     p.onClick = function (event) {
         this.sound.play(0, 1);

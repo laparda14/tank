@@ -29,6 +29,10 @@
       "path": "./libsrc"
     },
     {
+      "name": "socket.io",
+      "path": "./libsrc"
+    },
+    {
     "name": "particle",
     "path": "./libsrc"
 

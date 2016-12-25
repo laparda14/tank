@@ -10,6 +10,7 @@ var game_file_list = [
 	"libs/modules/res/res.js",
 	"libs/modules/socket/socket.js",
 	"libs/modules/physics/physics.js",
+	"libs/modules/socket.io/socket.io.js",
 	"libs/modules/particle/particle.js",
 	"bin-debug/LoadingUI.js",
 	"bin-debug/Main.js",
