@@ -39,6 +39,7 @@ io.sockets.on('connection',function(socket) {
 
     games[game][0].emit('master');
     games[game][1].emit('slave');
+    console.log('tow partner');
   }
 
   socket.on('delay',function(data) {
@@ -48,6 +49,11 @@ io.sockets.on('connection',function(socket) {
     //     partner.emit('delay',data);
     //   } 
     // });
+    var partner = socket.partner;
+    if(partner) {
+      data.steps += 1;
+      partner.emit('delay',data);
+    } 
   });
 
   socket.on('move',function(data) {
@@ -56,6 +62,10 @@ io.sockets.on('connection',function(socket) {
     //     partner.volatile.emit('move',data);
     //   } 
     // });
+    var partner = socket.partner;
+    if(partner) {
+      partner.volatile.emit('move',data);
+    } 
   });
 
   socket.on('ball',function(data) {
@@ -64,6 +74,11 @@ io.sockets.on('connection',function(socket) {
     //     partner.volatile.emit('ball',data);
     //   } 
     // });
+    console.log('update ball', data.x, data.y);
+    var partner = socket.partner;
+    if(partner) {
+      partner.volatile.emit('ball',data);
+    } 
   });
 
   socket.on('disconnect',function() {
@@ -73,10 +88,18 @@ io.sockets.on('connection',function(socket) {
     //     partner.set("partner",null);
     //   }
     // });
+    var partner = socket.partner;
+    if(partner) {
+      partner.emit('end');
+      partner.partner = null;
+    }
     // socket.get('game',function(err,game) {
     //   var idx = games[game].indexOf(socket);
     //   if(idx!=-1) games[game].splice(idx, 1);
     // });
+    var game = socket.game;
+    var idx = games[game].indexOf(socket);
+    if(idx!=-1) games[game].splice(idx, 1);
   });
 });
 

@@ -8,12 +8,9 @@ var game_file_list = [
 	"libs/modules/game/game.native.js",
 	"libs/modules/tween/tween.js",
 	"libs/modules/res/res.js",
-	"libs/modules/socket/socket.js",
-	"libs/modules/physics/physics.js",
-	"libs/modules/socket.io/socket.io.js",
-	"libs/modules/particle/particle.js",
 	"bin-debug/LoadingUI.js",
 	"bin-debug/Main.js",
+	"bin-debug/Wheel.js",
 	//----auto game_file_list end----
 ];
 
@@ -49,7 +46,7 @@ egret_native.egretStart = function () {
 		entryClassName: "Main",
 		frameRate: 30,
 		scaleMode: "fixedWidth",
-		contentWidth: 640,
+		contentWidth: 720,
 		contentHeight: 1136,
 		showPaintRect: false,
 		showFPS: false,
