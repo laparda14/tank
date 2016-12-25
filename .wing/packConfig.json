@@ -1,0 +1,8 @@
+{
+    "maxImageWidth": 2014,
+    "maxImageHeight": 2014,
+    "defaultResPath": "/Users/miui/Documents/personal/tank/resource/default.res.json",
+    "packGroups": {
+        "preload": true
+    }
+}

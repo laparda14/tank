@@ -1,0 +1,180 @@
+{
+	"groups": [
+		{
+			"keys": "description_json,link_png,coin_mp3,explosion_mp3,fire_mp3,clound-l_png,clound-m_png,clound-s_png,house_png,house1_png,wall_png,brand_svg,rocket_png,cover_png,loading_png,barrier_png,repeat_png,devil_png,weapon_png,pea-bullet_png,player_png,pea_png,cannon_png,index-bg_png,bg_png,blood_png,energy_png,fire_json,fireworks_json,jellyfish_json,magic_png,star_png,sun_json,test_json,test_png",
+			"name": "preload"
+		}
+	],
+	"resources": [
+		{
+			"name": "description_json",
+			"type": "json",
+			"url": "config/description.json"
+		},
+		{
+			"name": "link_png",
+			"type": "image",
+			"url": "assets/img/link.png"
+		},
+		{
+			"name": "coin_mp3",
+			"type": "sound",
+			"url": "assets/sounds/coin.mp3"
+		},
+		{
+			"name": "explosion_mp3",
+			"type": "sound",
+			"url": "assets/sounds/explosion.mp3"
+		},
+		{
+			"name": "fire_mp3",
+			"type": "sound",
+			"url": "assets/sounds/fire.mp3"
+		},
+		{
+			"name": "clound-l_png",
+			"type": "image",
+			"url": "assets/img/clound-l.png"
+		},
+		{
+			"name": "clound-m_png",
+			"type": "image",
+			"url": "assets/img/clound-m.png"
+		},
+		{
+			"name": "clound-s_png",
+			"type": "image",
+			"url": "assets/img/clound-s.png"
+		},
+		{
+			"name": "house_png",
+			"type": "image",
+			"url": "assets/img/house.png"
+		},
+		{
+			"name": "house1_png",
+			"type": "image",
+			"url": "assets/img/house1.png"
+		},
+		{
+			"name": "wall_png",
+			"type": "image",
+			"url": "assets/img/wall.png"
+		},
+		{
+			"name": "rocket_png",
+			"type": "image",
+			"url": "assets/img/rocket.png"
+		},
+		{
+			"name": "cover_png",
+			"type": "image",
+			"url": "assets/img/cover.png"
+		},
+		{
+			"name": "loading_png",
+			"type": "image",
+			"url": "assets/img/loading.png"
+		},
+		{
+			"name": "barrier_png",
+			"type": "image",
+			"url": "assets/img/barrier.png"
+		},
+		{
+			"name": "repeat_png",
+			"type": "image",
+			"url": "assets/img/repeat.png"
+		},
+		{
+			"name": "devil_png",
+			"type": "image",
+			"url": "assets/img/devil.png"
+		},
+		{
+			"name": "weapon_png",
+			"type": "image",
+			"url": "assets/img/weapon.png"
+		},
+		{
+			"name": "pea-bullet_png",
+			"type": "image",
+			"url": "assets/img/pea-bullet.png"
+		},
+		{
+			"name": "player_png",
+			"type": "image",
+			"url": "assets/img/player.png"
+		},
+		{
+			"name": "pea_png",
+			"type": "image",
+			"url": "assets/img/pea.png"
+		},
+		{
+			"name": "cannon_png",
+			"type": "image",
+			"url": "assets/img/cannon.png"
+		},
+		{
+			"name": "index-bg_png",
+			"type": "image",
+			"url": "assets/img/index-bg.png"
+		},
+		{
+			"name": "bg_png",
+			"type": "image",
+			"url": "assets/img/bg.png"
+		},
+		{
+			"name": "blood_png",
+			"type": "image",
+			"url": "assets/particle/blood.png"
+		},
+		{
+			"name": "energy_png",
+			"type": "image",
+			"url": "assets/particle/energy.png"
+		},
+		{
+			"name": "fire_json",
+			"type": "json",
+			"url": "assets/particle/fire.json"
+		},
+		{
+			"name": "fireworks_json",
+			"type": "json",
+			"url": "assets/particle/fireworks.json"
+		},
+		{
+			"name": "jellyfish_json",
+			"type": "json",
+			"url": "assets/particle/jellyfish.json"
+		},
+		{
+			"name": "magic_png",
+			"type": "image",
+			"url": "assets/particle/magic.png"
+		},
+		{
+			"name": "star_png",
+			"type": "image",
+			"url": "assets/particle/star.png"
+		},
+		{
+			"name": "sun_json",
+			"type": "json",
+			"url": "assets/particle/sun.json"
+		},
+		{
+			"name": "test_json",
+			"type": "json",
+			"url": "assets/particle/test.json"
+		},
+		{
+			"name": "test_png",
+			"type": "image",
+			"url": "assets/particle/test.png"
+		}
+	]
+}
