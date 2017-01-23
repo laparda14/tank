@@ -64,9 +64,11 @@ class Wheel extends egret.DisplayObjectContainer {
     private offsetX: number;
     private offsetY: number;
     private initOriPoint(e: egret.TouchEvent):void {
-        this.offsetX = e.stageX - this.rocker.x;
-        this.offsetY = e.stageY - this.rocker.y;
-        this.stage.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.onMove, this);
+        if(e.stageX < window.innerWidth / 2) {
+            this.offsetX = e.stageX - this.rocker.x;
+            this.offsetY = e.stageY - this.rocker.y;
+            this.stage.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.onMove, this);
+        }
     }
 
     private onMove(e: egret.TouchEvent):void {

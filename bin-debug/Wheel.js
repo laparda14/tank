@@ -49,9 +49,11 @@ var Wheel = (function (_super) {
         this.stage.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.onMove, this);
     };
     Wheel.prototype.initOriPoint = function (e) {
-        this.offsetX = e.stageX - this.rocker.x;
-        this.offsetY = e.stageY - this.rocker.y;
-        this.stage.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.onMove, this);
+        if (e.stageX < window.innerWidth / 2) {
+            this.offsetX = e.stageX - this.rocker.x;
+            this.offsetY = e.stageY - this.rocker.y;
+            this.stage.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.onMove, this);
+        }
     };
     Wheel.prototype.onMove = function (e) {
         var moveX = e.stageX;

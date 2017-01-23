@@ -81,12 +81,31 @@ var Main = (function (_super) {
      * Create a game scene
      */
     Main.prototype.createGameScene = function () {
+        this.stage.orientation = egret.OrientationMode.LANDSCAPE;
+        this.detectOrientation();
         var wheel = new Wheel(this.stage, 80, 40, 0x000000, 0.5, 0x999999, 0.5);
-        wheel.x = 200;
-        wheel.y = 200;
+        wheel.x = 150;
+        wheel.y = 500;
         this.addChild(wheel);
         this.addEventListener('wheel', function (e) {
             console.log(e);
+        }, this);
+        var fireBtn = new FireBtn(80);
+        fireBtn.x = 950;
+        fireBtn.y = 500;
+        this.addChild(fireBtn);
+    };
+    Main.prototype.detectOrientation = function () {
+        if (window.orientation === 0) {
+            console.log('show orientation tip');
+        }
+        this.stage.addEventListener(egret.StageOrientationEvent.ORIENTATION_CHANGE, function () {
+            if (window.orientation !== 90) {
+                console.log('show orientation tip');
+            }
+            else {
+                console.log('hide orientation tip');
+            }
         }, this);
     };
     return Main;

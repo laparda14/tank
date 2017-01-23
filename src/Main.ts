@@ -87,15 +87,34 @@ class Main extends egret.DisplayObjectContainer {
      * Create a game scene
      */
     private createGameScene():void {
-        let wheel:Wheel = new Wheel(this.stage, 80, 40, 0x000000, 0.5, 0x999999, 0.5);
-        wheel.x = 200;
-        wheel.y = 200;
+        this.stage.orientation = egret.OrientationMode.LANDSCAPE;
+        this.detectOrientation();
+        let wheel: Wheel = new Wheel(this.stage, 80, 40, 0x000000, 0.5, 0x999999, 0.5);
+        wheel.x = 150;
+        wheel.y = 500;
         this.addChild(wheel);
         this.addEventListener('wheel', function(e) {
             console.log(e);
         }, this);
+
+        let fireBtn: FireBtn = new FireBtn(80);
+        fireBtn.x = 950;
+        fireBtn.y = 500;
+        this.addChild(fireBtn);
     }
     
+    private detectOrientation():void {
+        if(window.orientation === 0) {
+            console.log('show orientation tip');
+        }
+        this.stage.addEventListener(egret.StageOrientationEvent.ORIENTATION_CHANGE, function() {
+            if(window.orientation !== 90) {
+                console.log('show orientation tip');
+            } else {
+                console.log('hide orientation tip');
+            }
+        }, this);
+    }
 }
 
 
