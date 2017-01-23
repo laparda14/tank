@@ -9,6 +9,7 @@ var game_file_list = [
 	"libs/modules/tween/tween.js",
 	"libs/modules/res/res.js",
 	"bin-debug/Button.js",
+	"bin-debug/Bg.js",
 	"bin-debug/FireBtn.js",
 	"bin-debug/LoadingUI.js",
 	"bin-debug/Main.js",

@@ -15,7 +15,7 @@ class Button extends egret.DisplayObjectContainer {
         this.radius = radius;
         this.bg = new egret.Shape();
         this.bg.graphics.beginFill(0x000000, 1);
-        this.bg.$setAlpha(0.1);
+        this.bg.$setAlpha(0.2);
         this.bg.graphics.drawCircle(0, 0, this.radius);
         this.bg.graphics.endFill();
         this.addChild(this.bg);

@@ -89,6 +89,10 @@ class Main extends egret.DisplayObjectContainer {
     private createGameScene():void {
         this.stage.orientation = egret.OrientationMode.LANDSCAPE;
         this.detectOrientation();
+
+        let bg: Bg = new Bg(this.stage);
+        this.addChild(bg);
+        
         let wheel: Wheel = new Wheel(this.stage, 80, 40, 0x000000, 0.5, 0x999999, 0.5);
         wheel.x = 150;
         wheel.y = 500;
@@ -101,8 +105,11 @@ class Main extends egret.DisplayObjectContainer {
         fireBtn.x = 950;
         fireBtn.y = 500;
         this.addChild(fireBtn);
+
+        
     }
     
+    // 判断是否是横屏
     private detectOrientation():void {
         if(window.orientation === 0) {
             console.log('show orientation tip');

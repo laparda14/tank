@@ -16,7 +16,7 @@ var Button = (function (_super) {
         _this.radius = radius;
         _this.bg = new egret.Shape();
         _this.bg.graphics.beginFill(0x000000, 1);
-        _this.bg.$setAlpha(0.1);
+        _this.bg.$setAlpha(0.2);
         _this.bg.graphics.drawCircle(0, 0, _this.radius);
         _this.bg.graphics.endFill();
         _this.addChild(_this.bg);

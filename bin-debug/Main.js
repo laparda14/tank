@@ -83,6 +83,8 @@ var Main = (function (_super) {
     Main.prototype.createGameScene = function () {
         this.stage.orientation = egret.OrientationMode.LANDSCAPE;
         this.detectOrientation();
+        var bg = new Bg(this.stage);
+        this.addChild(bg);
         var wheel = new Wheel(this.stage, 80, 40, 0x000000, 0.5, 0x999999, 0.5);
         wheel.x = 150;
         wheel.y = 500;
@@ -95,6 +97,7 @@ var Main = (function (_super) {
         fireBtn.y = 500;
         this.addChild(fireBtn);
     };
+    // 判断是否是横屏
     Main.prototype.detectOrientation = function () {
         if (window.orientation === 0) {
             console.log('show orientation tip');
