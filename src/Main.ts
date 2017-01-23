@@ -91,6 +91,9 @@ class Main extends egret.DisplayObjectContainer {
         wheel.x = 200;
         wheel.y = 200;
         this.addChild(wheel);
+        this.addEventListener('wheel', function(e) {
+            console.log(e);
+        }, this);
     }
     
 }

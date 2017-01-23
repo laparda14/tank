@@ -13,25 +13,24 @@ var Wheel = (function (_super) {
     __extends(Wheel, _super);
     function Wheel(stage, panelRadius, rockerRadius, panelColor, panelOpacity, rockerColor, rockerOpacity) {
         var _this = _super.call(this) || this;
+        // 仪表盘参数
         _this.panel = new egret.Shape();
+        // 摇杆参数
         _this.rocker = new egret.Shape();
         _this.panelColor = panelColor;
         _this.panelOpacity = panelOpacity;
         _this.panelRadius = panelRadius;
-        _this.rocker.x = _this.rocker.y = _this.panel.x = _this.panel.y = 0;
         _this.rockerColor = rockerColor;
         _this.rockerOpacity = rockerOpacity;
         _this.rockerRadius = rockerRadius;
+        _this.rocker.x = _this.rocker.y = _this.panel.x = _this.panel.y = 0;
         _this.addChild(_this.panel);
         _this.addChild(_this.rocker);
-        var point = new egret.Shape();
-        point.graphics.beginFill(0x000000, 1);
-        point.graphics.drawCircle(0, 0, 1);
-        point.graphics.endFill;
-        _this.addChild(point);
         _this.draw();
         _this.touchEnabled = true;
         _this.stage = stage;
+        _this.evt = new egret.Event('wheel', true, true);
+        _this.evt.data = {};
         stage.addEventListener(egret.TouchEvent.TOUCH_BEGIN, _this.initOriPoint, _this);
         stage.addEventListener(egret.TouchEvent.TOUCH_END, _this.stopMove, _this);
         stage.addEventListener(egret.TouchEvent.TOUCH_CANCEL, _this.stopMove, _this);
@@ -50,8 +49,6 @@ var Wheel = (function (_super) {
         this.stage.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.onMove, this);
     };
     Wheel.prototype.initOriPoint = function (e) {
-        this.initX = e.stageX;
-        this.initY = e.stageY;
         this.offsetX = e.stageX - this.rocker.x;
         this.offsetY = e.stageY - this.rocker.y;
         this.stage.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.onMove, this);
@@ -60,16 +57,17 @@ var Wheel = (function (_super) {
         var moveX = e.stageX;
         var moveY = e.stageY;
         var distant = Math.sqrt(Math.pow(moveX - this.x, 2) + Math.pow(moveY - this.y, 2));
-        console.log('distant', distant);
+        var deg = Math.atan2(moveY - this.y, moveX - this.x);
         if (distant > this.panelRadius) {
-            var reg = Math.atan2(moveY - this.y, moveX - this.x);
-            this.rocker.x = this.panelRadius * Math.cos(reg);
-            this.rocker.y = this.panelRadius * Math.sin(reg);
+            this.rocker.x = this.panelRadius * Math.cos(deg);
+            this.rocker.y = this.panelRadius * Math.sin(deg);
         }
         else {
-            this.rocker.x = e.stageX - this.offsetX;
-            this.rocker.y = e.stageY - this.offsetY;
+            this.rocker.x = moveX - this.offsetX;
+            this.rocker.y = moveY - this.offsetY;
         }
+        this.evt.data.deg = deg;
+        this.dispatchEvent(this.evt);
     };
     return Wheel;
 }(egret.DisplayObjectContainer));
