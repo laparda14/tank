@@ -13,6 +13,7 @@ var game_file_list = [
 	"bin-debug/FireBtn.js",
 	"bin-debug/LoadingUI.js",
 	"bin-debug/Main.js",
+	"bin-debug/Tank.js",
 	"bin-debug/Wheel.js",
 	//----auto game_file_list end----
 ];

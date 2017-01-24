@@ -92,7 +92,7 @@ class Main extends egret.DisplayObjectContainer {
 
         let bg: Bg = new Bg(this.stage);
         this.addChild(bg);
-        
+
         let wheel: Wheel = new Wheel(this.stage, 80, 40, 0x000000, 0.5, 0x999999, 0.5);
         wheel.x = 150;
         wheel.y = 500;
@@ -106,7 +106,10 @@ class Main extends egret.DisplayObjectContainer {
         fireBtn.y = 500;
         this.addChild(fireBtn);
 
-        
+        let tank: Tank = new Tank();
+        tank.x = 400;
+        tank.y = 300;
+        this.addChild(tank);
     }
     
     // 判断是否是横屏
