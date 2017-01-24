@@ -46,9 +46,13 @@ var Tank = (function (_super) {
     Tank.prototype.createBody = function () {
         var body = new egret.Shape();
         body.graphics.beginFill(0xffffff);
-        body.graphics.drawRoundRect(-40, 0, 80, 15, 5);
+        body.graphics.drawArc(0, 30, 35, -Math.PI / 8, -Math.PI * 7 / 8, true);
         body.graphics.endFill();
         return body;
+    };
+    Tank.prototype.equip = function (cannon) {
+        this.addChild(cannon);
+        this.cannon = cannon;
     };
     return Tank;
 }(egret.DisplayObjectContainer));

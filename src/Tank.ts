@@ -4,6 +4,8 @@
 
 class Tank extends egret.DisplayObjectContainer {
 
+    private cannon: Cannon;
+
     public constructor() {
         super();
         this.addChild(this.createTower());
@@ -44,9 +46,14 @@ class Tank extends egret.DisplayObjectContainer {
     private createBody(): egret.Shape {
         let body: egret.Shape = new egret.Shape();
         body.graphics.beginFill(0xffffff);
-        body.graphics.drawRoundRect(-40, 0, 80, 15, 5);
+        body.graphics.drawArc(0, 30, 35, -Math.PI / 8, -Math.PI * 7 / 8, true);
         body.graphics.endFill();
 
         return body;
+    }
+
+    public equip(cannon: Cannon): void {
+        this.addChild(cannon);
+        this.cannon = cannon;
     }
 }

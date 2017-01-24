@@ -109,6 +109,8 @@ class Main extends egret.DisplayObjectContainer {
         let tank: Tank = new Tank();
         tank.x = 400;
         tank.y = 300;
+        let cannon: Cannon = new Cannon();
+        tank.equip(cannon);
         this.addChild(tank);
     }
     

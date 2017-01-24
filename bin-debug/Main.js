@@ -99,6 +99,8 @@ var Main = (function (_super) {
         var tank = new Tank();
         tank.x = 400;
         tank.y = 300;
+        var cannon = new Cannon();
+        tank.equip(cannon);
         this.addChild(tank);
     };
     // 判断是否是横屏
