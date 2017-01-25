@@ -12,6 +12,15 @@ class Tank extends egret.DisplayObjectContainer {
         this.addChild(this.createBody());
         this.addChild(this.createBelt());
         let tyreX = -33;
+
+        // 定位原点
+        let point: egret.Shape = new egret.Shape();
+        point.graphics.beginFill(0xff0b0b);
+        point.graphics.drawCircle(0, 0, 1);
+        point.graphics.endFill();
+        this.addChild(point);
+
+
         for(let i:number = 0; i < 4; i++) {
             this.addChild(this.createTyre(tyreX + i * 21 + 2, 30, 9));
         }

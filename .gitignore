@@ -1,9 +1,2 @@
-**/node_modules/
-
-# idea ignore
-.idea/
-*.ipr
-*.iml
-*.iws
 bin-debug
 template

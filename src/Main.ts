@@ -112,6 +112,97 @@ class Main extends egret.DisplayObjectContainer {
         let cannon: Cannon = new Cannon();
         tank.equip(cannon);
         this.addChild(tank);
+
+
+        // 刚体
+		var factor:number = 15;
+
+		//创建world
+		var world:p2.World = new p2.World();
+		world.sleepMode = p2.World.BODY_SLEEPING;
+
+		//创建plane
+		var planeShape:p2.Plane = new p2.Plane();
+		var planeBody:p2.Body = new p2.Body({
+            position: [0, this.stage.stageWidth / 6 / factor]
+        });
+		planeBody.addShape(planeShape);
+        let ground: egret.Sprite = createGround(this.stage.stageWidth);
+        this.addChild(ground);
+		planeBody.displays = [ground];
+		world.addBody(planeBody);
+
+        var sprite: egret.Sprite = new egret.Sprite();
+        this.addChild(sprite);
+        var debugDraw = new p2DebugDraw(world);
+        debugDraw.setSprite(sprite);
+
+		egret.Ticker.getInstance().register(function (dt) {
+			if (dt < 10) {
+				return;
+			}
+			if (dt > 1000) {
+				return;
+			}
+			world.step(dt / 1000);
+            debugDraw.drawDebug();
+			var stageHeight:number = egret.MainContext.instance.stage.stageHeight;
+			var l = world.bodies.length;
+			for (var i:number = 0; i < l; i++) {
+				var boxBody:p2.Body = world.bodies[i];
+				var box:egret.DisplayObject = boxBody.displays[0];
+				if (box) {
+					box.x = boxBody.position[0] * factor;
+					box.y = stageHeight - boxBody.position[1] * factor;
+					box.rotation = 360 - boxBody.angle * 180 / Math.PI;
+					if (boxBody.sleepState == p2.Body.SLEEPING) {
+						box.alpha = 0.5;
+					}
+					else {
+						box.alpha = 1;
+					}
+				}
+			}
+		}, this);
+
+		//鼠标点击添加刚体
+		this.stage.addEventListener(egret.TouchEvent.TOUCH_BEGIN, onTouch, this);
+		var self = this;
+
+		function onTouch(e:egret.TouchEvent):void {
+			var positionX:number = Math.floor(e.stageX / factor);
+			var positionY:number = Math.floor((egret.MainContext.instance.stage.stageHeight - e.stageY) / factor);
+			addOneBox(positionX,positionY);
+		}
+		function addOneBox(positionX,positionY) {
+			var vertices:number[][] = 
+            [
+                [0, 15/factor],
+                [-50/factor, -40/factor],
+                [50/factor, -40/factor]
+            ];
+
+            var triangleShape: p2.Convex = new p2.Convex({vertices:vertices});
+            var boxBody:p2.Body = new p2.Body({ mass: 1, position: [positionX, positionY], angularVelocity: 1});
+            boxBody.addShape(triangleShape);
+            world.addBody(boxBody);
+
+            var display:egret.DisplayObject = new Tank();
+            display.width = (<p2.Box>triangleShape).width * factor;
+            display.height = (<p2.Box>triangleShape).height * factor;
+
+			boxBody.displays = [display];
+			self.addChild(display);
+		}
+
+        function createGround(stageWidth): egret.Sprite {
+            var result: egret.Sprite = new egret.Sprite();
+            result.graphics.beginFill(0x2d78f4);
+            result.graphics.drawRect(0,0,stageWidth,40);
+            result.graphics.endFill();
+            return result;
+        }  
+
     }
     
     // 判断是否是横屏
