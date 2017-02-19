@@ -10,6 +10,15 @@
 			  "physics.d.ts"
 			],
 			"root": "src"
+		},
+		{
+			"name": "box2d",
+			"description": "box2d",
+			"files": [
+				"Box2dweb.js",
+				"Box2dweb.d.ts"
+			],
+			"root": "src"
 		}
 	]
 }

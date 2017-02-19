@@ -1,0 +1,13 @@
+{
+	"name": "egret",
+	"version": "4.0.0",
+	"modules": [
+		{
+			"name": "box2d",
+			"description": "box2d",
+			"files": ["Box2dweb.js",
+				"Box2dweb.d.ts"],
+			"root": "src"
+		}
+	]
+}

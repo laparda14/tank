@@ -1,12 +1,12 @@
 /*
- * 大炮类
+ * 子弹类
 */
 
-class Cannon extends egret.DisplayObjectContainer {
+class Bullet extends egret.Shape {
 
     public constructor() {
         super();
-        this.addChild(this.createBody());
+        // this.addChild(this.createBody());
     }
 
     private createBody(): egret.Shape {

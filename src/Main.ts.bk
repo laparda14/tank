@@ -86,9 +86,6 @@ class Main extends egret.DisplayObjectContainer {
      * 创建游戏场景
      * Create a game scene
      */
-    private world:Box2D.Dynamics.b2World;
-    private debug:Box2D.Dynamics.b2DebugDraw;
-    private p2m:number = 30;
     private createGameScene():void {
         this.stage.orientation = egret.OrientationMode.LANDSCAPE;
         this.detectOrientation();
@@ -96,13 +93,34 @@ class Main extends egret.DisplayObjectContainer {
         let bg: Bg = new Bg(this.stage);
         this.addChild(bg);
 
-        var sWidth:number = this.stage.stageWidth;
-        var sHeight:number = this.stage.stageHeight;
+        
 
-        this.createWorld();
-        this.createDebug();
-        let tankBd:Box2D.Dynamics.b2Body = this.createBox(Math.random() * 100 + 350,sHeight - 150);
-        this.createGround(0,sHeight - 10,sWidth,100);
+        // let tank: Tank = new Tank();
+        // tank.x = 400;
+        // tank.y = 300;
+        // let cannon: Cannon = new Cannon();
+        // tank.equip(cannon);
+        // this.addChild(tank);
+
+
+        // 刚体
+		var factor:number = 15;
+
+		//创建world
+		var world:p2.World = new p2.World();
+		world.sleepMode = p2.World.BODY_SLEEPING;
+        world.gravity = [0, -9.8];
+
+		//创建plane
+		var planeShape:p2.Plane = new p2.Plane();
+		var planeBody:p2.Body = new p2.Body({
+            position: [0, this.stage.stageWidth / 8 / factor]
+        });
+		planeBody.addShape(planeShape);
+        let ground: egret.Sprite = createGround(this.stage.stageWidth);
+        this.addChild(ground);
+		planeBody.displays = [ground];
+		world.addBody(planeBody);
 
 		egret.Ticker.getInstance().register(function (dt) {
 			if (dt < 10) {
@@ -111,21 +129,58 @@ class Main extends egret.DisplayObjectContainer {
 			if (dt > 1000) {
 				return;
 			}
-            tank.x = tankBd.GetPosition().x * this.p2m;
-            tank.y = tankBd.GetPosition().y * this.p2m;
-            tank.rotation = tankBd.GetAngle() * 180 / Math.PI;
-            this.world.Step(dt / 1000, 10, 10);
-            this.world.DrawDebugData();
+			world.step(dt / 1000);
+			var stageHeight:number = egret.MainContext.instance.stage.stageHeight;
+			var l = world.bodies.length;
+			for (var i:number = 0; i < l; i++) {
+				var boxBody:p2.Body = world.bodies[i];
+				var box:egret.DisplayObject = boxBody.displays[0];
+				if (box) {
+					box.x = boxBody.position[0] * factor;
+					box.y = stageHeight - boxBody.position[1] * factor;
+					box.rotation = 360 - boxBody.angle * 180 / Math.PI;
+					if (boxBody.sleepState == p2.Body.SLEEPING) {
+						box.alpha = 0.5;
+					}
+					else {
+						box.alpha = 1;
+					}
+				}
+			}
 		}, this);
 
 		var self = this;
         var tank: Tank = new Tank();
-        // tank.width = tankBd.get * factor;
-        // tank.height = tankBd.height * factor;
-        tank.x = tankBd.GetPosition().x * this.p2m;
-        tank.y = tankBd.GetPosition().y * this.p2m;
-        tank.rotation = tankBd.GetAngle() * 180 / Math.PI;
-        this.addChild(tank);
+        addOneBox(400 / factor, 200 / factor);
+        
+		function addOneBox(positionX,positionY) {
+			var vertices:number[][] = [
+                [0, 15/factor],
+                [-50/factor, -40/factor],
+                [50/factor, -40/factor]
+            ];
+
+            var triangleShape: p2.Convex = new p2.Convex({vertices:vertices});
+            var boxBody:p2.Body = new p2.Body({ mass: 1, position: [positionX, positionY], angularVelocity: 1});
+            boxBody.addShape(triangleShape);
+            world.addBody(boxBody);
+            
+            let cannon: Cannon = new Cannon();
+            tank.equip(cannon);
+            tank.width = (<p2.Box>triangleShape).width * factor;
+            tank.height = (<p2.Box>triangleShape).height * factor;
+
+			boxBody.displays = [tank];
+			self.addChild(tank);
+		}
+
+        function createGround(stageWidth): egret.Sprite {
+            var result: egret.Sprite = new egret.Sprite();
+            result.graphics.beginFill(0x3b4c03);
+            result.graphics.drawRect(0,0,stageWidth,40);
+            result.graphics.endFill();
+            return result;
+        }  
 
         // 摇杆
         let wheel: Wheel = new Wheel(this.stage, 80, 40, 0x000000, 0.5, 0x999999, 0.5);
@@ -146,74 +201,6 @@ class Main extends egret.DisplayObjectContainer {
             tank.fire();
         }
         fireBtn.addEventListener(egret.TouchEvent.TOUCH_END, fire, this);
-    }
-    
-    private createGround(posX:number,posY:number,w:number,h:number,isStatic:boolean=false){
-        var bodyDef:Box2D.Dynamics.b2BodyDef = new Box2D.Dynamics.b2BodyDef();
-        bodyDef.position = new Box2D.Common.Math.b2Vec2(posX/this.p2m,posY/this.p2m);
-        bodyDef.type = Box2D.Dynamics.b2Body.b2_staticBody;
-        var body:Box2D.Dynamics.b2Body = this.world.CreateBody(bodyDef);
-
-        var vertices:Box2D.Common.Math.b2Vec2[] = [
-            new Box2D.Common.Math.b2Vec2(0,0),
-            new Box2D.Common.Math.b2Vec2(150/this.p2m,-10/this.p2m),
-            new Box2D.Common.Math.b2Vec2(250/this.p2m,1/this.p2m),
-            new Box2D.Common.Math.b2Vec2(350/this.p2m,-20/this.p2m),
-            new Box2D.Common.Math.b2Vec2(450/this.p2m,-11/this.p2m),
-            new Box2D.Common.Math.b2Vec2(650/this.p2m,0/this.p2m),
-            new Box2D.Common.Math.b2Vec2(750/this.p2m,-11/this.p2m),
-            new Box2D.Common.Math.b2Vec2(850/this.p2m,0/this.p2m),
-            new Box2D.Common.Math.b2Vec2(950/this.p2m,-11/this.p2m),
-            new Box2D.Common.Math.b2Vec2(1350/this.p2m,0/this.p2m),
-        ];
-        for (var i = 1; i<vertices.length; i++)
-        {
-            var v1:Box2D.Common.Math.b2Vec2 = vertices[i-1];
-            var v2:Box2D.Common.Math.b2Vec2 = vertices[i];
-            var edge:Box2D.Collision.Shapes.b2PolygonShape = new Box2D.Collision.Shapes.b2PolygonShape();
-            edge.SetAsEdge(v1,v2);
-            var fixtureDef:Box2D.Dynamics.b2FixtureDef = new Box2D.Dynamics.b2FixtureDef();
-            fixtureDef.shape = edge;
-            body.CreateFixture(fixtureDef);
-        }
-    }
-    private createBox(posX:number,posY:number): Box2D.Dynamics.b2Body{
-        var bodyDef:Box2D.Dynamics.b2BodyDef = new Box2D.Dynamics.b2BodyDef();
-        bodyDef.position = new Box2D.Common.Math.b2Vec2(posX/this.p2m,posY/this.p2m);
-        bodyDef.type = Box2D.Dynamics.b2Body.b2_dynamicBody;
-        var body:Box2D.Dynamics.b2Body = this.world.CreateBody(bodyDef);
-
-        var poly:Box2D.Collision.Shapes.b2PolygonShape;
-        var vertices:Box2D.Common.Math.b2Vec2[] = [
-            new Box2D.Common.Math.b2Vec2(0, -15/this.p2m),
-            new Box2D.Common.Math.b2Vec2(50/this.p2m, 40/this.p2m),
-            new Box2D.Common.Math.b2Vec2(-50/this.p2m, 40/this.p2m)
-        ];
-        poly = Box2D.Collision.Shapes.b2PolygonShape.AsArray(vertices, 3);
-        var fixtureDef:Box2D.Dynamics.b2FixtureDef = new Box2D.Dynamics.b2FixtureDef();
-        fixtureDef.density = 3;
-        fixtureDef.restitution = 0.2;
-        fixtureDef.shape = poly;
-
-        body.CreateFixture(fixtureDef);
-        return body;
-    }
-    private createWorld(){
-        var gravity:Box2D.Common.Math.b2Vec2 = new Box2D.Common.Math.b2Vec2(0,10);
-        this.world = new Box2D.Dynamics.b2World(gravity,true);
-    }
-    private createDebug(){
-        var s:egret.Sprite = new egret.Sprite();
-        this.addChild(s);
-
-        this.debug = new Box2D.Dynamics.b2DebugDraw();
-        this.debug.SetSprite(s);
-        this.debug.SetDrawScale(this.p2m);
-        this.debug.SetLineThickness(1);
-        this.debug.SetAlpha(0.8);
-        this.debug.SetFillAlpha(0.5);
-        this.debug.SetFlags(Box2D.Dynamics.b2DebugDraw.e_shapeBit);
-        this.world.SetDebugDraw(this.debug);
     }
 
     // 判断是否是横屏

@@ -22,8 +22,12 @@
 			"name": "res"
 		},
 		{
-		"name": "physics",
-		"path": "./libsrc"
+			"name": "physics",
+			"path": "./libsrc"
+		},
+		{
+			"name": "box2d",
+			"path": "./libsrc"
 		}
 	]
 }

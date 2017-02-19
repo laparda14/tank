@@ -65,4 +65,8 @@ class Tank extends egret.DisplayObjectContainer {
         this.addChild(cannon);
         this.cannon = cannon;
     }
+
+    public fire() :void {
+        this.cannon.fire();
+    }
 }

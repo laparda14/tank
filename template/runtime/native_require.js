@@ -9,6 +9,7 @@ var game_file_list = [
 	"libs/modules/tween/tween.js",
 	"libs/modules/res/res.js",
 	"libs/modules/physics/physics.js",
+	"libs/modules/box2d/box2d.js",
 	"bin-debug/Button.js",
 	"bin-debug/Bg.js",
 	"bin-debug/Cannon.js",
@@ -18,7 +19,7 @@ var game_file_list = [
 	"bin-debug/Main.js",
 	"bin-debug/Tank.js",
 	"bin-debug/Wheel.js",
-	"bin-debug/p2DebugDraw.js",
+	"bin-debug/bullet/bullet.js",
 	//----auto game_file_list end----
 ];
 
