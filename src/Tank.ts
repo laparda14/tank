@@ -5,25 +5,35 @@
 class Tank extends egret.DisplayObjectContainer {
 
     private cannon: Cannon;
-
-    public constructor() {
+    public tankBd: Box2D.Dynamics.b2Body;
+    private factor: number;
+    public constructor(factor: number, world: Box2D.Dynamics.b2World, sHeight: number) {
         super();
-        this.addChild(this.createTower());
-        this.addChild(this.createBody());
-        this.addChild(this.createBelt());
-        let tyreX = -33;
+        this.factor = factor;
+        this.tankBd= this.createBox(Math.random() * 100 + 350,sHeight - 150, factor, world);
 
-        // 定位原点
-        let point: egret.Shape = new egret.Shape();
-        point.graphics.beginFill(0xff0b0b);
-        point.graphics.drawCircle(0, 0, 1);
-        point.graphics.endFill();
-        this.addChild(point);
+        // this.addChild(this.createTower());
+        // this.addChild(this.createBody());
+        // this.addChild(this.createBelt());
+        // let tyreX = -33;
+
+        // // 定位原点
+        // let point: egret.Shape = new egret.Shape();
+        // point.graphics.beginFill(0xff0b0b);
+        // point.graphics.drawCircle(0, 0, 1);
+        // point.graphics.endFill();
+        // this.addChild(point);
 
 
-        for(let i:number = 0; i < 4; i++) {
-            this.addChild(this.createTyre(tyreX + i * 21 + 2, 30, 9));
-        }
+        // for(let i:number = 0; i < 4; i++) {
+        //     this.addChild(this.createTyre(tyreX + i * 21 + 2, 30, 9));
+        // }
+
+        // tank.width = tankBd.get * factor;
+        // tank.height = tankBd.height * factor;
+        // this.x = this.tankBd.GetPosition().x * factor;
+        // this.y = this.tankBd.GetPosition().y * factor;
+        // this.rotation = this.tankBd.GetAngle() * 180 / Math.PI;
     }
 
     private createTower(): egret.Shape {
@@ -62,11 +72,43 @@ class Tank extends egret.DisplayObjectContainer {
     }
 
     public equip(cannon: Cannon): void {
-        this.addChild(cannon);
-        this.cannon = cannon;
+        // this.addChild(cannon);
+        // this.cannon = cannon;
     }
 
     public fire() :void {
         this.cannon.fire();
+    }
+
+    public aim(): void{
+        
+    }
+
+    public updatePos(): void {
+        this.x = this.tankBd.GetPosition().x * this.factor;
+        this.y = this.tankBd.GetPosition().y * this.factor;
+        this.rotation = this.tankBd.GetAngle() * 180 / Math.PI;
+    }
+
+    private createBox(posX:number,posY:number,factor:number, world): Box2D.Dynamics.b2Body{
+        var bodyDef:Box2D.Dynamics.b2BodyDef = new Box2D.Dynamics.b2BodyDef();
+        bodyDef.position = new Box2D.Common.Math.b2Vec2(posX/factor,posY/factor);
+        bodyDef.type = Box2D.Dynamics.b2Body.b2_dynamicBody;
+        var body:Box2D.Dynamics.b2Body = world.CreateBody(bodyDef);
+
+        var poly:Box2D.Collision.Shapes.b2PolygonShape;
+        var vertices:Box2D.Common.Math.b2Vec2[] = [
+            new Box2D.Common.Math.b2Vec2(0, -15/factor),
+            new Box2D.Common.Math.b2Vec2(50/factor, 40/factor),
+            new Box2D.Common.Math.b2Vec2(-50/factor, 40/factor)
+        ];
+        poly = Box2D.Collision.Shapes.b2PolygonShape.AsArray(vertices, 3);
+        var fixtureDef:Box2D.Dynamics.b2FixtureDef = new Box2D.Dynamics.b2FixtureDef();
+        fixtureDef.density = 3;
+        fixtureDef.restitution = 0.2;
+        fixtureDef.shape = poly;
+
+        body.CreateFixture(fixtureDef);
+        return body;
     }
 }
