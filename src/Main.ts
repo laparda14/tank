@@ -14,7 +14,6 @@ class Main extends egret.DisplayObjectContainer {
 
     private onAddToStage(event:egret.Event) {
         //设置加载进度界面
-        //Config to load process interface
         this.loadingView = new LoadingUI();
         this.stage.addChild(this.loadingView);
 
@@ -88,7 +87,7 @@ class Main extends egret.DisplayObjectContainer {
      */
     private world:Box2D.Dynamics.b2World;
     private debug:Box2D.Dynamics.b2DebugDraw;
-    private p2m:number = 30;
+    private factor:number = 30;
     private createGameScene():void {
         this.stage.orientation = egret.OrientationMode.LANDSCAPE;
         this.detectOrientation();
@@ -99,10 +98,16 @@ class Main extends egret.DisplayObjectContainer {
         var sWidth:number = this.stage.stageWidth;
         var sHeight:number = this.stage.stageHeight;
 
-        this.createWorld();
+        var gravity:Box2D.Common.Math.b2Vec2 = new Box2D.Common.Math.b2Vec2(0,10);
+        this.world = new Box2D.Dynamics.b2World(gravity,true);
         this.createDebug();
-        let tankBd:Box2D.Dynamics.b2Body = this.createBox(Math.random() * 100 + 350,sHeight - 150);
-        this.createGround(0,sHeight - 10,sWidth,100);
+        
+        new Ground(0,sHeight - 10,sWidth,100, this.factor, this.world);
+
+        var self = this;
+        var tank: Tank = new Tank(this.factor, this.world, sHeight);
+        
+        this.addChild(tank);
 
 		egret.Ticker.getInstance().register(function (dt) {
 			if (dt < 10) {
@@ -111,21 +116,10 @@ class Main extends egret.DisplayObjectContainer {
 			if (dt > 1000) {
 				return;
 			}
-            tank.x = tankBd.GetPosition().x * this.p2m;
-            tank.y = tankBd.GetPosition().y * this.p2m;
-            tank.rotation = tankBd.GetAngle() * 180 / Math.PI;
             this.world.Step(dt / 1000, 10, 10);
             this.world.DrawDebugData();
+            tank.updatePos();
 		}, this);
-
-		var self = this;
-        var tank: Tank = new Tank();
-        // tank.width = tankBd.get * factor;
-        // tank.height = tankBd.height * factor;
-        tank.x = tankBd.GetPosition().x * this.p2m;
-        tank.y = tankBd.GetPosition().y * this.p2m;
-        tank.rotation = tankBd.GetAngle() * 180 / Math.PI;
-        this.addChild(tank);
 
         // 摇杆
         let wheel: Wheel = new Wheel(this.stage, 80, 40, 0x000000, 0.5, 0x999999, 0.5);
@@ -148,67 +142,12 @@ class Main extends egret.DisplayObjectContainer {
         fireBtn.addEventListener(egret.TouchEvent.TOUCH_END, fire, this);
     }
     
-    private createGround(posX:number,posY:number,w:number,h:number,isStatic:boolean=false){
-        var bodyDef:Box2D.Dynamics.b2BodyDef = new Box2D.Dynamics.b2BodyDef();
-        bodyDef.position = new Box2D.Common.Math.b2Vec2(posX/this.p2m,posY/this.p2m);
-        bodyDef.type = Box2D.Dynamics.b2Body.b2_staticBody;
-        var body:Box2D.Dynamics.b2Body = this.world.CreateBody(bodyDef);
-
-        var vertices:Box2D.Common.Math.b2Vec2[] = [
-            new Box2D.Common.Math.b2Vec2(0,0),
-            new Box2D.Common.Math.b2Vec2(150/this.p2m,-10/this.p2m),
-            new Box2D.Common.Math.b2Vec2(250/this.p2m,1/this.p2m),
-            new Box2D.Common.Math.b2Vec2(350/this.p2m,-20/this.p2m),
-            new Box2D.Common.Math.b2Vec2(450/this.p2m,-11/this.p2m),
-            new Box2D.Common.Math.b2Vec2(650/this.p2m,0/this.p2m),
-            new Box2D.Common.Math.b2Vec2(750/this.p2m,-11/this.p2m),
-            new Box2D.Common.Math.b2Vec2(850/this.p2m,0/this.p2m),
-            new Box2D.Common.Math.b2Vec2(950/this.p2m,-11/this.p2m),
-            new Box2D.Common.Math.b2Vec2(1350/this.p2m,0/this.p2m),
-        ];
-        for (var i = 1; i<vertices.length; i++)
-        {
-            var v1:Box2D.Common.Math.b2Vec2 = vertices[i-1];
-            var v2:Box2D.Common.Math.b2Vec2 = vertices[i];
-            var edge:Box2D.Collision.Shapes.b2PolygonShape = new Box2D.Collision.Shapes.b2PolygonShape();
-            edge.SetAsEdge(v1,v2);
-            var fixtureDef:Box2D.Dynamics.b2FixtureDef = new Box2D.Dynamics.b2FixtureDef();
-            fixtureDef.shape = edge;
-            body.CreateFixture(fixtureDef);
-        }
-    }
-    private createBox(posX:number,posY:number): Box2D.Dynamics.b2Body{
-        var bodyDef:Box2D.Dynamics.b2BodyDef = new Box2D.Dynamics.b2BodyDef();
-        bodyDef.position = new Box2D.Common.Math.b2Vec2(posX/this.p2m,posY/this.p2m);
-        bodyDef.type = Box2D.Dynamics.b2Body.b2_dynamicBody;
-        var body:Box2D.Dynamics.b2Body = this.world.CreateBody(bodyDef);
-
-        var poly:Box2D.Collision.Shapes.b2PolygonShape;
-        var vertices:Box2D.Common.Math.b2Vec2[] = [
-            new Box2D.Common.Math.b2Vec2(0, -15/this.p2m),
-            new Box2D.Common.Math.b2Vec2(50/this.p2m, 40/this.p2m),
-            new Box2D.Common.Math.b2Vec2(-50/this.p2m, 40/this.p2m)
-        ];
-        poly = Box2D.Collision.Shapes.b2PolygonShape.AsArray(vertices, 3);
-        var fixtureDef:Box2D.Dynamics.b2FixtureDef = new Box2D.Dynamics.b2FixtureDef();
-        fixtureDef.density = 3;
-        fixtureDef.restitution = 0.2;
-        fixtureDef.shape = poly;
-
-        body.CreateFixture(fixtureDef);
-        return body;
-    }
-    private createWorld(){
-        var gravity:Box2D.Common.Math.b2Vec2 = new Box2D.Common.Math.b2Vec2(0,10);
-        this.world = new Box2D.Dynamics.b2World(gravity,true);
-    }
     private createDebug(){
         var s:egret.Sprite = new egret.Sprite();
         this.addChild(s);
-
         this.debug = new Box2D.Dynamics.b2DebugDraw();
         this.debug.SetSprite(s);
-        this.debug.SetDrawScale(this.p2m);
+        this.debug.SetDrawScale(this.factor);
         this.debug.SetLineThickness(1);
         this.debug.SetAlpha(0.8);
         this.debug.SetFillAlpha(0.5);

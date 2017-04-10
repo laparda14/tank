@@ -25,11 +25,10 @@
 	<script egret="lib" src="libs/modules/egret/egret.js" src-release="libs/modules/egret/egret.min.js"></script>
 	<script egret="lib" src="libs/modules/egret/egret.web.js" src-release="libs/modules/egret/egret.web.min.js"></script>
 	<script egret="lib" src="libs/modules/game/game.js" src-release="libs/modules/game/game.min.js"></script>
-	<script egret="lib" src="libs/modules/game/game.web.js" src-release="libs/modules/game/game.web.min.js"></script>
 	<script egret="lib" src="libs/modules/tween/tween.js" src-release="libs/modules/tween/tween.min.js"></script>
 	<script egret="lib" src="libs/modules/res/res.js" src-release="libs/modules/res/res.min.js"></script>
-	<script egret="lib" src="libs/modules/physics/physics.js" src-release="libs/modules/physics/physics.min.js"></script>
-	<script egret="lib" src="libs/modules/box2d/box2d.js" src-release="libs/modules/box2d/box2d.min.js"></script>
+	<script egret="lib" src="libsrc/bin/physics/physics.js" src-release="libsrc/bin/physics/physics.min.js"></script>
+	<script egret="lib" src="libsrc/bin/box2d/box2d.js" src-release="libsrc/bin/box2d/box2d.min.js"></script>
 	<!--modules_files_end-->
 
     <!--这个标签为不通过egret提供的第三方库的方式使用的 javascript 文件，请将这些文件放在libs下，但不要放在modules下面。-->
@@ -39,14 +38,15 @@
     <!--这个标签会被替换为项目中所有的 javascript 文件。删除 game_files 标签后，项目文件加载列表将不会变化，请谨慎操作！-->
     <!--game_files_start-->
 	<script egret="game" src="bin-debug/Button.js"></script>
+	<script egret="game" src="bin-debug/Wheel.js"></script>
 	<script egret="game" src="bin-debug/Bg.js"></script>
 	<script egret="game" src="bin-debug/Cannon.js"></script>
 	<script egret="game" src="bin-debug/DragHelper.js"></script>
 	<script egret="game" src="bin-debug/FireBtn.js"></script>
+	<script egret="game" src="bin-debug/Ground.js"></script>
 	<script egret="game" src="bin-debug/LoadingUI.js"></script>
 	<script egret="game" src="bin-debug/Main.js"></script>
 	<script egret="game" src="bin-debug/Tank.js"></script>
-	<script egret="game" src="bin-debug/Wheel.js"></script>
 	<script egret="game" src="bin-debug/bullet/bullet.js"></script>
 	<!--game_files_end-->
 </head>
